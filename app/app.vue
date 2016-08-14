@@ -46,12 +46,12 @@ export default {
         }
     },
     methods:{
-        /*在一个随机的空白位添加2或4 概率7:3*/
+        /*在一个随机的空白位添加2或4 概率9:1*/
         randomAdd(){
             let arr = this.shuffle(this.blankIndex());
             //延时100毫秒添加
             setTimeout(_=>{
-               this.nums.$set(arr.pop(),Math.random()>0.7 ? 4 : 2); 
+               this.nums.$set(arr.pop(),Math.random()>0.9 ? 4 : 2); 
             },100);
         },
         /*获取当前空白隔索引组成的数组*/
