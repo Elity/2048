@@ -13,7 +13,7 @@ module.exports = {
     loaders: [
       {test: /\.css$/, loader: 'style!css'},
       {test: /\.vue$/, loader: 'vue'},
-      {test: /\.js$/,exclude:/node_modules|vue\/dist|vue-router\/|vue-loader\/|vue-hot-reload-api\// ,loader: 'babel'}
+      {test: /\.js$/,exclude:/node_modules/ ,loader: 'babel'}
     ]
   },
   vue:{
@@ -22,7 +22,7 @@ module.exports = {
     }
   },
   babel: {
-    presets: ['es2015','stage-0'],
+    presets: ['es2015'],
     plugins: ['transform-runtime']
   },
   plugins:[

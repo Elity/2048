@@ -6,9 +6,10 @@
                 v-text="num"
                 v-getclass="num"
                 v-getposition="$index"
-                track-by="$index"></li>
+                track-by="$index">
+            </li>
         </ul>
-        <button @click="reset()">重置</button>
+        <button @click="reset()" id='btn'>重置</button>
     </div>    
 </template>
 
@@ -28,7 +29,7 @@ export default {
         document.addEventListener('touchmove', e=>{
             e.target.classList.contains('box') && e.preventDefault();
         });
-        localStorage['save'] ? this.nums = JSON.parse(localStorage['save'])
+        localStorage['save1'] ? this.nums = JSON.parse(localStorage['save1'])
                              : this.reset();
     },
     directives:{
@@ -157,12 +158,11 @@ export default {
             hasMove && this.randomAdd();
         },
         save(){
-           localStorage['save'] = JSON.stringify(this.nums); 
+           localStorage['save1'] = JSON.stringify(this.nums); 
         },
         //重置游戏
         reset(){
             this.nums = Array(16).fill('');
-
             let i =0;
             while(i++<2){ //随机添加2个
                this.randomAdd(); 
@@ -185,6 +185,7 @@ export default {
     }
 }
 </script>
+
 <style>
     @import url(http://fonts.useso.com/css?family=Inknut+Antiqua);
     @import url(./main.css);
