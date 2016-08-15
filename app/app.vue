@@ -9,7 +9,7 @@
                 track-by="$index">
             </li>
         </ul>
-        <button @click="reset()" id='btn'>重置</button>
+        <button @click="reset()">重置</button>
     </div>    
 </template>
 
@@ -30,20 +30,21 @@ export default {
             e.target.classList.contains('box') && e.preventDefault();
         });
         localStorage['save1'] ? this.nums = JSON.parse(localStorage['save1'])
-                             : this.reset();
+                             :  this.reset();
     },
     directives:{
         getclass(value) {
             let classes = this.el.classList;
-            classes.forEach(_=>{
+            Array.prototype.forEach.call(classes,_=>{
                 if(/^s\w+$/.test(_))classes.remove(_);
             });
             value ? classes.add('s' + value) 
-                  : classes.add('empty');
+                  : classes.add('empty');    
         },
         getposition(index){
             this.el.style.left = index%4*25 + '%';
             this.el.style.top = Math.floor(index/4)*25 + '%';
+            document.querySelector('#btn').innerHTML = index;
         }
     },
     methods:{
@@ -166,7 +167,7 @@ export default {
             let i =0;
             while(i++<2){ //随机添加2个
                this.randomAdd(); 
-            }
+            } 
         },
         isPass(){
             let isOver=true,hasPass=false,tmp = this.T(this.nums,1);
