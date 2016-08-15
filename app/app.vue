@@ -185,7 +185,6 @@ export default {
     }
 }
 </script>
-
 <style>
     @import url(http://fonts.useso.com/css?family=Inknut+Antiqua);
     @import url(./main.css);
