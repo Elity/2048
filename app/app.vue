@@ -44,7 +44,6 @@ export default {
         getposition(index){
             this.el.style.left = index%4*25 + '%';
             this.el.style.top = Math.floor(index/4)*25 + '%';
-            document.querySelector('#btn').innerHTML = index;
         }
     },
     methods:{
