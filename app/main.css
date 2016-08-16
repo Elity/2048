@@ -25,10 +25,10 @@
     }
 }
 
-#app,#app ul{
-    width:100%;
+#app{
+    position:relative;
+    font-family: 'Inknut Antiqua', serif;
 }
-
 #app ul{
     list-style:none;
     display:inline-block;
@@ -37,6 +37,30 @@
     position:relative;
     height:0;
     padding-top:100%;
+    width:100%;
+}
+.mask{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    padding-bottom:100%;
+    background:rgba(0,0,0,0.38);
+    transition: all 1s ease;
+    opacity:0;
+}
+.mask div{
+    cursor:pointer;
+    width:100%;
+    height:100%;
+    position:absolute;
+    font-size:3.5em;
+    font-weight:bold;
+    color:#ddd;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-shadow: 2px 2px 10px #555;
 }
 #app button{
     width:100px;
@@ -70,7 +94,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Inknut Antiqua', serif;
     animation:appear .5s ease-in;
     transition:background .3s,color .3s .3s;
 }
@@ -136,6 +159,13 @@
     box-shadow: 0 0 30px 10px hsla(211, 84%, 70%, 0.45),inset 0 0 0 1px hsla(0,0%,100%,.33333);
  
 }
+.show-transition {
+  opacity:1;
+}
+.show-leave{
+  opacity:0;  
+}
+
 @media all and (orientation : landscape){
     #app{
         width:30%;

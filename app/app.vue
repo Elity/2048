@@ -9,7 +9,10 @@
                 track-by="$index">
             </li>
         </ul>
-        <button @click="reset()">重置</button>
+        <div class="mask" v-show='show===1' @click='show=0' transition="show">
+            <div>{{msg}}</div>
+        </div>
+        <button @click="reset">重置</button>
     </div>    
 </template>
 
@@ -17,6 +20,9 @@
 export default {
     data () {
         return {
+            show:-1,
+            msg:'',
+            pass:false,
             start : {},  //记录移动端触摸起始点
             nums : []   //记录15个框格的数字
         }
@@ -169,18 +175,24 @@ export default {
             while(i++<2){ //随机添加2个
                this.randomAdd(); 
             } 
+            this.show = 0;
         },
         isPass(){
-            let isOver=true,hasPass=false,tmp = this.T(this.nums,1);
+            let isOver=true,hasBlank=false,tmp = this.T(this.nums,1);
             this.nums.forEach((i,j)=>{
-                if(this.nums[j-4] == i || this.nums[j+4] == i || tmp[j-4] == tmp[j] || tmp[j+4] == tmp[j]){
+                if(!i || this.nums[j-4] == i || this.nums[j+4] == i || tmp[j-4] == tmp[j] || tmp[j+4] == tmp[j]){
                     isOver = false;
                 }
-                if(i==2048){
-                    hasPass = true;
+                if(i==2048 && !this.pass){
+                    this.msg = "2048达成";
+                    this.show = 1;
+                    this.pass = true;
                 }
             });
-            !this.blankIndex().length && isOver && alert('游戏结束！');
+            if(isOver){
+                this.msg = "Game Over";
+                this.show = 1;
+            }
         }
     }
 }
