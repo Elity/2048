@@ -26,6 +26,7 @@
 }
 
 #app{
+    width:100%;
     position:relative;
     font-family: 'Inknut Antiqua', serif;
 }
