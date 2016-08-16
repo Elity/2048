@@ -26,7 +26,12 @@ module.exports = {
     plugins: ['transform-runtime']
   },
   plugins:[
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    }),
   ],
   devServer: {
     contentBase: "./public",//本地服务器所加载的页面所在的目录
@@ -36,5 +41,6 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.js', '.vue']
-  }    
+  },
+  devtool: 'source-map'
 }

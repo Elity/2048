@@ -35,8 +35,8 @@ export default {
     directives:{
         getclass(value) {
             let classes = this.el.classList;
-            Array.prototype.forEach.call(classes,_=>{
-                if(/^s\w+$/.test(_))classes.remove(_);
+            [].forEach.call(classes,_=>{
+                /^s\w+$/.test(_) && classes.remove(_);
             });
             value ? classes.add('s' + value) 
                   : classes.add('empty');    
@@ -162,7 +162,9 @@ export default {
         },
         //重置游戏
         reset(){
-            this.nums = Array(16).fill('');
+            //[].fill兼容性还是太低
+            //this.nums = Array(16).fill('');
+            this.nums = Array(16).join('-').split('-');
             let i =0;
             while(i++<2){ //随机添加2个
                this.randomAdd(); 
@@ -178,9 +180,7 @@ export default {
                     hasPass = true;
                 }
             });
-            if(!this.blankIndex().length){
-                isOver && alert('游戏结束！');
-            };
+            !this.blankIndex().length && isOver && alert('游戏结束！');
         }
     }
 }
