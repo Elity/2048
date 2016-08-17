@@ -119,7 +119,16 @@ export default {
         */
         keyDown(e){
             //左上右下 分别转置0 3 2 1 次
-            const map = {37:0,38:3,39:2,40:1};
+            const map = {
+                37: 0, //LEFT
+                38: 3, //UP
+                39: 2, //RIGHT
+                40: 1, //DOWN
+                87: 3, // W
+                68: 2, // D
+                83: 1, // S
+                65: 0  // A
+            };
             if(!(e.keyCode in map))return;
             this.handle(map[e.keyCode]);
         },
