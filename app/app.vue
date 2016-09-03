@@ -9,7 +9,7 @@
                 track-by="$index">
             </li>
         </ul>
-        <div class="mask" v-show='show===1' @click='show=0' transition="show">
+        <div class="mask" v-show='show===1' @click='show=0'>
             <div>{{msg}}</div>
         </div>
         <button @click="reset">重置</button>
@@ -140,7 +140,8 @@ export default {
         },
         /*移动滑块 i:转置次数 */
         move(i){
-            let tmp = this.T(this.nums,i),//把任意方向键转置，当成向左移动
+            let indexs = this.T(Object.keys(String(Array(17))),i),//记录旋转前的各个位置
+                tmp = this.T(this.nums,i),//把任意方向键转置，当成向左移动
                 hasMove = false, //一次操作有移动方块时才添加方块
                 /*
                 *记录已经合并过一次的位置 避免重复合并
@@ -148,42 +149,63 @@ export default {
                 */
                 hasCombin = {};
             tmp.forEach((j,k)=>{
+                let newIndex = 0,index = indexs[k]-0,thisMoved = false;
                 while(k%4 && j!==''){
                     if(tmp[k-1] === ''){ //当前位置的前一位置为空,交换俩位置
                         tmp[k-1] = j;
                         tmp[k] = '';
                         hasMove = true;
+                        thisMoved = true;
                         if(hasCombin[k]){
                             hasCombin[k-1] = true;
                             hasCombin[k] = false;
                         }
+                        newIndex = k-1;
                     }else if(tmp[k-1] === j && !hasCombin[k] && !hasCombin[k-1]){
                         //当前位置与前一位置数字相同，合并到前一位置，然后清空当前位置
                         j *= 2;
                         tmp[k-1] = j;
                         tmp[k] = '';
                         hasMove = true;
+                        thisMoved = true;
                         hasCombin[k-1] = true;  //记录合并位置
+                        newIndex = k-1;
                     }else{
                         break;
                     }
                     k--;
                 } 
+                thisMoved && this.moveNode(index,indexs[newIndex]);
             });
-            this.nums = this.T(tmp,4-i);//转置回去，把数据还给this.nums
-            hasMove && this.randomAdd();
+            setTimeout(_=>{
+                this.nums = this.T(tmp,4-i);//转置回去，把数据还给this.nums
+                hasMove && this.randomAdd();
+            },200);
         },
-        //索引index的元素向direct方向移动1步
-        moveNode(direct,index){
+        //索引index的元素移动到newIndex
+        moveNode(index,newIndex){
             const map = {
-                0:'left',
-                1:'down',
-                2:'right',
-                3:'up'
+                0: -1,
+                1: 1,
+                2: 1,
+                3: -1
             };
-            let curEle = document.querySelectorAll('.box')[index],
-                clone = curEle.clone(true);
-            
+            let curEle = $('.box').eq(index),
+                clone = curEle.clone(),
+                pEle = curEle.parent(),
+                box = $('<li class="box empty other"></li>');
+            box.css({
+                left: index%4*25 + '%',
+                top: Math.floor(index/4)*25 + '%'
+            }).appendTo(pEle);
+            clone.addClass('other').appendTo(pEle);
+            clone.animate({
+                left: newIndex%4*25 + '%',
+                top: Math.floor(newIndex/4)*25 + '%'
+            },300,'swing',function(){
+                $(this).remove();
+                box.remove();
+            }); 
         },
         save(){
            localStorage['save1'] = JSON.stringify(this.nums); 
@@ -221,6 +243,5 @@ export default {
 </script>
 
 <style>
-    @import url(http://fonts.useso.com/css?family=Inknut+Antiqua);
     @import url(./main.css);
 </style>

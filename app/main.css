@@ -87,7 +87,7 @@
     position:absolute;
     font-size:2.8em;
     cursor:pointer;
-    background: #eee4da;
+    background: hsla(30,37%,89%,.35);
     border: 1px solid #ccc;
     box-shadow: 1px 1px 4px;
     box-sizing: border-box;
@@ -95,15 +95,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    animation:appear .5s ease-in;
-    transition:background .3s,color .3s .3s;
+    /*animation:appear .5s ease-in;
+    transition:background .3s,color .3s .3s;*/
 }
 .empty{
-    background: rgba(238, 228, 218, 0.35);
+    background:#f0f0f0;
     box-shadow: inset 1px 1px 3px  #929292;
 }
 .s2{
-    background: #eee4da;
+    background: #f8f3e8;
     box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0); 
 }
 .s4{
