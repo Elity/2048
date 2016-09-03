@@ -173,6 +173,18 @@ export default {
             this.nums = this.T(tmp,4-i);//转置回去，把数据还给this.nums
             hasMove && this.randomAdd();
         },
+        //索引index的元素向direct方向移动1步
+        moveNode(direct,index){
+            const map = {
+                0:'left',
+                1:'down',
+                2:'right',
+                3:'up'
+            };
+            let curEle = document.querySelectorAll('.box')[index],
+                clone = curEle.clone(true);
+            
+        },
         save(){
            localStorage['save1'] = JSON.stringify(this.nums); 
         },
