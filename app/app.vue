@@ -44,7 +44,8 @@ export default {
             [].forEach.call(classes,_=>{
                 /^s\w+$/.test(_) && classes.remove(_);
             });
-            value ? classes.add('s' + value) 
+            classes.remove('empty');
+            value ? classes.add('s' + value)
                   : classes.add('empty');    
         },
         getposition(index){
@@ -64,7 +65,7 @@ export default {
         /*获取当前空白隔索引组成的数组*/
         blankIndex(){
             let arr = [];
-            this.nums.forEach(function(i,j){
+            this.nums.forEach((i,j)=>{
                 i==='' && arr.push(j);
             });
             return arr;
