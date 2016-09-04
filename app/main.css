@@ -1,27 +1,20 @@
-@keyframes appear{
-    0% {
-        opacity: 0;
-        transform: scale(0); 
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1); 
-    } 
+@keyframes fade {
+    to {transform: scale(1);opacity:1;border-radius:0}
 }
 @keyframes bluePulse{
     from {
         background-color: #007d9a;
-        -webkit-box-shadow: 0 0 9px #333;
+        box-shadow: 0 0 9px #333;
     }
 
     50% {
         background-color: #2daebf;
-        -webkit-box-shadow: 0 0 18px #2daebf;
+        box-shadow: 0 0 18px #2daebf;
     }
 
     to {
         background-color: #007d9a;
-        -webkit-box-shadow: 0 0 9px #333;
+        box-shadow: 0 0 9px #333;
     }
 }
 
@@ -47,7 +40,6 @@
     width:100%;
     padding-bottom:100%;
     background:rgba(0,0,0,0.38);
-    transition: all 1s ease;
     opacity:0;
 }
 .mask div{
@@ -102,6 +94,14 @@
     background:#f0f0f0;
     box-shadow: inset 1px 1px 3px  #929292;
 }
+.combin{
+    z-index:1;
+    opacity:0;
+    transform: scale(0.1);
+    border-radius:50%;
+    animation:fade 200ms ease 100ms;
+}
+
 .s2{
     background: #f8f3e8;
     box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0); 
@@ -161,9 +161,14 @@
  
 }
 .show-transition {
+  transition: all .5s ease;  
+  transform:scale(1) rotate(360deg);
+  border-radius:0;
   opacity:1;
 }
-.show-leave{
+.show-enter,.show-leave{
+  transform:scale(0) rotate(0);
+  border-radius:50%;
   opacity:0;  
 }
 

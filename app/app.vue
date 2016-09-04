@@ -9,7 +9,7 @@
                 track-by="$index">
             </li>
         </ul>
-        <div class="mask" v-show='show===1' @click='show=0'>
+        <div class="mask" v-show='show===1' @click='show=0' transition='show'>
             <div>{{msg}}</div>
         </div>
         <button @click="reset">重置</button>
@@ -20,7 +20,7 @@
 export default {
     data () {
         return {
-            show:-1,
+            show:0,
             msg:'',
             pass:false,
             start : {},  //记录移动端触摸起始点
@@ -149,7 +149,7 @@ export default {
                 */
                 hasCombin = {};
             tmp.forEach((j,k)=>{
-                let newIndex = 0,index = indexs[k]-0,thisMoved = false;
+                let newIndex = 0,index = indexs[k]-0,thisMoved = false,combinNum = 0;
                 while(k%4 && j!==''){
                     if(tmp[k-1] === ''){ //当前位置的前一位置为空,交换俩位置
                         tmp[k-1] = j;
@@ -168,6 +168,7 @@ export default {
                         tmp[k] = '';
                         hasMove = true;
                         thisMoved = true;
+                        combinNum = j;
                         hasCombin[k-1] = true;  //记录合并位置
                         newIndex = k-1;
                     }else{
@@ -175,36 +176,36 @@ export default {
                     }
                     k--;
                 } 
-                thisMoved && this.moveNode(index,indexs[newIndex]);
+                thisMoved && this.moveNode(index,indexs[newIndex],combinNum);
             });
             setTimeout(_=>{
                 this.nums = this.T(tmp,4-i);//转置回去，把数据还给this.nums
                 hasMove && this.randomAdd();
-            },200);
+            },80);
         },
-        //索引index的元素移动到newIndex
-        moveNode(index,newIndex){
-            const map = {
-                0: -1,
-                1: 1,
-                2: 1,
-                3: -1
-            };
-            let curEle = $('.box').eq(index),
+        //索引index的元素移动到nextIndex
+        moveNode(index,nextIndex,combinNum){
+            let allBox = $('.box'),
+                curEle = allBox.eq(index),
+                nextEle = allBox.eq(nextIndex).clone(),
                 clone = curEle.clone(),
                 pEle = curEle.parent(),
-                box = $('<li class="box empty other"></li>');
+                box = $('<li class="box empty"></li>');
             box.css({
                 left: index%4*25 + '%',
                 top: Math.floor(index/4)*25 + '%'
             }).appendTo(pEle);
-            clone.addClass('other').appendTo(pEle);
+            clone.appendTo(pEle);
+            curEle.css('opacity',0);
+            combinNum && nextEle.addClass('combin s'+combinNum).text(combinNum).appendTo(pEle);
             clone.animate({
-                left: newIndex%4*25 + '%',
-                top: Math.floor(newIndex/4)*25 + '%'
-            },300,'swing',function(){
+                left: nextIndex%4*25 + '%',
+                top: Math.floor(nextIndex/4)*25 + '%'
+            },200,'swing',function(){
                 $(this).remove();
                 box.remove();
+                curEle.css('opacity',1);
+                nextEle.remove();
             }); 
         },
         save(){
@@ -229,7 +230,8 @@ export default {
                 }
                 if(i==2048 && !this.pass){
                     this.msg = "2048达成";
-                    this.show = 1;
+                    this.show = 1;           
+                    //确保只提示一次 达到2048仍可以继续玩
                     this.pass = true;
                 }
             });
