@@ -232,7 +232,7 @@ export default {
                     isOver = false;
                 }
                 if(i==2048 && !this.pass){
-                    this.msg = "2048达成";
+                    this.msg = "2048";
                     this.show = 1;           
                     //确保只提示一次 达到2048仍可以继续玩
                     this.pass = true;

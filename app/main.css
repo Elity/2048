@@ -21,7 +21,7 @@
 #app{
     width:100%;
     position:relative;
-    font-family: 'Inknut Antiqua', serif;
+    font-family: 'Inknut Antiqua','Clear Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 #app ul{
     list-style:none;

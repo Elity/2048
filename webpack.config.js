@@ -31,7 +31,7 @@ module.exports = {
       compress: {
         warnings: false
       }
-    }),
+    })
   ],
   devServer: {
     contentBase: "./public",//本地服务器所加载的页面所在的目录
