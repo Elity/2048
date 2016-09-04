@@ -24,7 +24,7 @@ export default {
             msg:'',
             pass:false,
             start : {},  //记录移动端触摸起始点
-            nums : []   //记录15个框格的数字
+            nums : []   //记录16个框格的数字
         }
     },
     ready: function () {
@@ -36,7 +36,7 @@ export default {
             e.target.classList.contains('box') && e.preventDefault();
         });
         localStorage['save1'] ? this.nums = JSON.parse(localStorage['save1'])
-                             :  this.reset();
+                              : this.reset();
     },
     directives:{
         getclass(value) {
@@ -140,7 +140,7 @@ export default {
         },
         /*移动滑块 i:转置次数 */
         move(i){
-            let indexs = this.T(Object.keys(String(Array(17))),i),//记录旋转前的各个位置
+            let indexs = this.T(Object.keys(String(Array(17))),i),//记录旋转前的各个位置索引
                 tmp = this.T(this.nums,i),//把任意方向键转置，当成向左移动
                 hasMove = false, //一次操作有移动方块时才添加方块
                 /*
@@ -149,14 +149,17 @@ export default {
                 */
                 hasCombin = {};
             tmp.forEach((j,k)=>{
-                let newIndex = 0,index = indexs[k]-0,thisMoved = false,combinNum = 0;
+                let newIndex = 0,  //方块挪动后的索引 （转换后的索引）
+                    index = indexs[k]-0, //换算到转换前的索引
+                    thisMoved = false, //此方块有数字，且被移动了 标记  需要应用动画
+                    combinNum = 0; //方块若有合并，记录合并后的数字
                 while(k%4 && j!==''){
                     if(tmp[k-1] === ''){ //当前位置的前一位置为空,交换俩位置
                         tmp[k-1] = j;
                         tmp[k] = '';
                         hasMove = true;
                         thisMoved = true;
-                        if(hasCombin[k]){
+                        if(hasCombin[k]){//该位置有过合并，挪动后要记录到挪动后的位置
                             hasCombin[k-1] = true;
                             hasCombin[k] = false;
                         }
