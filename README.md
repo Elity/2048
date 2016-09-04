@@ -6,4 +6,4 @@
 
 **[DEMO](http://www.ccc5.cc/2048)**
 
-![img](http://imgur.com/a/DtGzw)
+![img](http://i.imgur.com/cvoYGE0.png)
