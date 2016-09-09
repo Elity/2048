@@ -18,6 +18,25 @@
     }
 }
 
+@keyframes x0{to{left:0;}}
+.x0{animation:x0 .3s}
+@keyframes x25{to{left:25%;}}
+.x25{animation:x25 .3s}
+@keyframes x50{to{left:50%;}}
+.x50{animation:x50 .3s}
+@keyframes x75{to{left:75%;}}
+.x75{animation:x75 .3s}
+
+@keyframes y0{to{top:0;}}
+.y0{animation:y0 .3s}
+@keyframes y25{to{top:25%;}}
+.y25{animation:y25 .3s}
+@keyframes y50{to{top:50%;}}
+.y50{animation:y50 .3s}
+@keyframes y75{to{top:75%;}}
+.y75{animation:y75 .3s}
+
+
 #app{
     width:100%;
     position:relative;

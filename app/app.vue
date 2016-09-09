@@ -184,7 +184,7 @@ export default {
             setTimeout(_=>{
                 this.nums = this.T(tmp,4-i);//转置回去，把数据还给this.nums
                 hasMove && this.randomAdd();
-            },80);
+            },180);
         },
         //索引index的元素移动到nextIndex
         moveNode(index,nextIndex,combinNum){
@@ -194,6 +194,8 @@ export default {
                 clone = curEle.clone(),
                 pEle = curEle.parent(),
                 box = $('<li class="box empty"></li>');
+            //box.addClass('x' + index%4*25 + ' y' + Math.floor(index/4)*25).appendTo(pEle);
+
             box.css({
                 left: index%4*25 + '%',
                 top: Math.floor(index/4)*25 + '%'
@@ -201,7 +203,14 @@ export default {
             clone.appendTo(pEle);
             curEle.css('opacity',0);
             combinNum && nextEle.addClass('combin s'+combinNum).text(combinNum).appendTo(pEle);
-            clone.animate({
+            clone.addClass('x' + nextIndex%4*25 + ' y' + Math.floor(nextIndex/4)*25);
+            setTimeout(_=>{
+                clone.remove();
+                box.remove();
+                curEle.css('opacity',1);
+                nextEle.remove();
+            },300);
+            /*clone.animate({
                 left: nextIndex%4*25 + '%',
                 top: Math.floor(nextIndex/4)*25 + '%'
             },200,'swing',function(){
@@ -209,7 +218,7 @@ export default {
                 box.remove();
                 curEle.css('opacity',1);
                 nextEle.remove();
-            }); 
+            }); */
         },
         save(){
            localStorage['save1'] = JSON.stringify(this.nums); 
