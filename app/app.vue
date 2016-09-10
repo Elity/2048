@@ -184,41 +184,39 @@ export default {
             setTimeout(_=>{
                 this.nums = this.T(tmp,4-i);//转置回去，把数据还给this.nums
                 hasMove && this.randomAdd();
-            },180);
+            },100);
         },
         //索引index的元素移动到nextIndex
         moveNode(index,nextIndex,combinNum){
-            let allBox = $('.box'),
-                curEle = allBox.eq(index),
-                nextEle = allBox.eq(nextIndex).clone(),
-                clone = curEle.clone(),
-                pEle = curEle.parent(),
-                box = $('<li class="box empty"></li>');
-            //box.addClass('x' + index%4*25 + ' y' + Math.floor(index/4)*25).appendTo(pEle);
-
-            box.css({
-                left: index%4*25 + '%',
-                top: Math.floor(index/4)*25 + '%'
-            }).appendTo(pEle);
-            clone.appendTo(pEle);
-            curEle.css('opacity',0);
-            combinNum && nextEle.addClass('combin s'+combinNum).text(combinNum).appendTo(pEle);
-            clone.addClass('x' + nextIndex%4*25 + ' y' + Math.floor(nextIndex/4)*25);
+            let allBox = document.querySelectorAll('.box'),
+                curEle = allBox[index],//将被移动的元素
+                nextEle = allBox[nextIndex].cloneNode(),//合并后的目标元素
+                clone = curEle.cloneNode(true),//当前元素克隆 包括里面的数组 用作移动动画
+                pEle = curEle.parentNode,
+                boxL = index%4*25 + '%',
+                boxT = Math.floor(index/4)*25 + '%',
+                box = allBox[allBox.length-1].cloneNode();//复制最后一个元素做当前元素的遮罩
+            box.className = 'box empty';
+            box.style.left = boxL;
+            box.style.top = boxT;
+            pEle.insertAdjacentElement('beforeEnd',box);
+            curEle.style.opacity = 0;
+            if(combinNum){
+                nextEle.classList.add('combin');
+                nextEle.classList.add('s' + combinNum);
+                nextEle.innerText = combinNum;
+                pEle.insertAdjacentElement('beforeEnd',nextEle);
+            }
+            clone.style.left === nextIndex%4*25 + '%' ?
+            clone.classList.add('y' + Math.floor(nextIndex/4)*25):
+            clone.classList.add('x' + nextIndex%4*25);
+            pEle.insertAdjacentElement('beforeEnd',clone);
             setTimeout(_=>{
                 clone.remove();
-                box.remove();
-                curEle.css('opacity',1);
                 nextEle.remove();
-            },300);
-            /*clone.animate({
-                left: nextIndex%4*25 + '%',
-                top: Math.floor(nextIndex/4)*25 + '%'
-            },200,'swing',function(){
-                $(this).remove();
                 box.remove();
-                curEle.css('opacity',1);
-                nextEle.remove();
-            }); */
+                curEle.style.opacity = 1;
+            },200);
         },
         save(){
            localStorage['save1'] = JSON.stringify(this.nums); 

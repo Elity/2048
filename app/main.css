@@ -19,22 +19,22 @@
 }
 
 @keyframes x0{to{left:0;}}
-.x0{animation:x0 .3s}
+.x0{animation:x0 .2s}
 @keyframes x25{to{left:25%;}}
-.x25{animation:x25 .3s}
+.x25{animation:x25 .2s}
 @keyframes x50{to{left:50%;}}
-.x50{animation:x50 .3s}
+.x50{animation:x50 .2s}
 @keyframes x75{to{left:75%;}}
-.x75{animation:x75 .3s}
+.x75{animation:x75 .2s}
 
 @keyframes y0{to{top:0;}}
-.y0{animation:y0 .3s}
+.y0{animation:y0 .2s}
 @keyframes y25{to{top:25%;}}
-.y25{animation:y25 .3s}
+.y25{animation:y25 .2s}
 @keyframes y50{to{top:50%;}}
-.y50{animation:y50 .3s}
+.y50{animation:y50 .2s}
 @keyframes y75{to{top:75%;}}
-.y75{animation:y75 .3s}
+.y75{animation:y75 .2s}
 
 
 #app{
