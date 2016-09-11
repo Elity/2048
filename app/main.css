@@ -118,7 +118,7 @@
     opacity:0;
     transform: scale(0.1);
     border-radius:50%;
-    animation:fade 200ms ease 100ms;
+    animation:fade 200ms ease;
 }
 
 .s2{

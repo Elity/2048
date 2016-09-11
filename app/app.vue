@@ -1,6 +1,6 @@
 ﻿<template>
     <div id="app">
-        <ul>
+        <ul id="wrap">
             <li class='box' 
                 v-for="num in nums"
                 v-text="num"
@@ -48,19 +48,53 @@ export default {
             value ? classes.add('s' + value)
                   : classes.add('empty');    
         },
-        getposition(index){
-            this.el.style.left = index%4*25 + '%';
-            this.el.style.top = Math.floor(index/4)*25 + '%';
+        getposition(index,percent){
+            let pos = this.vm.getIndexPos(index,true);
+            this.el.style.left = pos.left;
+            this.el.style.top = pos.top;
         }
     },
     methods:{
+        /*获取指定索引位置的css:top，left百分比值*/
+        getIndexPos(index,percent){
+            let p = percent ? '%' : '';
+            return {
+                left: index%4*25 + p,
+                top: Math.floor(index/4)*25 + p
+            }
+        },
         /*在一个随机的空白位添加2或4 概率9:1*/
         randomAdd(){
-            let arr = this.shuffle(this.blankIndex());
+            let arr = this.shuffle(this.blankIndex()),
+                pos = this.getIndexPos(arr.pop());
             //延时100毫秒添加
             setTimeout(_=>{
                this.nums.$set(arr.pop(),Math.random()>0.9 ? 4 : 2); 
             },100);
+        },
+        /*randomAdd(){
+            let arr = this.shuffle(this.blankIndex()),
+                index = arr.pop(),
+                rd = Math.random()>0.9 ? 4 : 2,
+                newBox = this.newBoxApear(index,rd,true);
+            //延时200毫秒
+            setTimeout(_=>{
+                newBox.remove();
+               this.nums.$set(index,rd); 
+            },200);
+        },*/
+        /*添加一个新的方块，并指定索引和里面的内容*/
+        newBoxApear(index,num,combin){
+            let cls = num ? 's' + num : 'empty',
+                cb = combin ? ' combin' : '',
+                box = document.createElement('div'),
+                pos = this.getIndexPos(index,true);
+            box.className = cls + ' box' + cb;
+            box.style.left = pos.left;
+            box.style.top = pos.top;
+            box.innerText = num || '';
+            document.getElementById('wrap').appendChild(box);
+            return box;
         },
         /*获取当前空白隔索引组成的数组*/
         blankIndex(){
@@ -190,30 +224,26 @@ export default {
         moveNode(index,nextIndex,combinNum){
             let allBox = document.querySelectorAll('.box'),
                 curEle = allBox[index],//将被移动的元素
-                nextEle = allBox[nextIndex].cloneNode(),//合并后的目标元素
                 clone = curEle.cloneNode(true),//当前元素克隆 包括里面的数组 用作移动动画
                 pEle = curEle.parentNode,
-                boxL = index%4*25 + '%',
-                boxT = Math.floor(index/4)*25 + '%',
+                curPos = this.getIndexPos(index,true),
                 box = allBox[allBox.length-1].cloneNode();//复制最后一个元素做当前元素的遮罩
             box.className = 'box empty';
-            box.style.left = boxL;
-            box.style.top = boxT;
+            box.style.left = curPos.left;
+            box.style.top = curPos.top;
             pEle.insertAdjacentElement('beforeEnd',box);
             curEle.style.opacity = 0;
+            let nextEle = null;
             if(combinNum){
-                nextEle.classList.add('combin');
-                nextEle.classList.add('s' + combinNum);
-                nextEle.innerText = combinNum;
-                pEle.insertAdjacentElement('beforeEnd',nextEle);
+                nextEle = this.newBoxApear(nextIndex,combinNum,true);
             }
-            clone.style.left === nextIndex%4*25 + '%' ?
-            clone.classList.add('y' + Math.floor(nextIndex/4)*25):
-            clone.classList.add('x' + nextIndex%4*25);
+            let nextPos = this.getIndexPos(nextIndex);
+            clone.style.left === nextPos.left + '%' ? clone.classList.add('y' + nextPos.top)
+                                                      : clone.classList.add('x' + nextPos.left);
             pEle.insertAdjacentElement('beforeEnd',clone);
             setTimeout(_=>{
                 clone.remove();
-                nextEle.remove();
+                nextEle && nextEle.remove();
                 box.remove();
                 curEle.style.opacity = 1;
             },200);
