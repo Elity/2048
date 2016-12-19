@@ -72,17 +72,6 @@ export default {
                this.nums.$set(arr.pop(),Math.random()>0.9 ? 4 : 2); 
             },100);
         },
-        /*randomAdd(){
-            let arr = this.shuffle(this.blankIndex()),
-                index = arr.pop(),
-                rd = Math.random()>0.9 ? 4 : 2,
-                newBox = this.newBoxApear(index,rd,true);
-            //延时200毫秒
-            setTimeout(_=>{
-                newBox.remove();
-               this.nums.$set(index,rd); 
-            },200);
-        },*/
         /*添加一个新的方块，并指定索引和里面的内容*/
         newBoxApear(index,num,combin){
             let cls = num ? 's' + num : 'empty',
@@ -121,9 +110,9 @@ export default {
         T(arr,n){
             n=n%4;
             if(n===0)return arr;
-            var l = arr.length,d = Math.sqrt(l),tmp = [];
-            for(var i=0;i<d;i+=1)
-                for(var j=0;j<d;j+=1)
+            let l = arr.length,d = Math.sqrt(l),tmp = [];
+            for(let i=0;i<d;i+=1)
+                for(let j=0;j<d;j+=1)
                     tmp[d-i-1+j*d] = arr[i*d+j];
             if(n>1)tmp=this.T(tmp,n-1);
             return tmp;
