@@ -207,7 +207,7 @@ export default {
             setTimeout(_=>{
                 this.nums = this.T(tmp,4-i);//转置回去，把数据还给this.nums
                 hasMove && this.randomAdd();
-            },100);
+            },101);
         },
         //索引index的元素移动到nextIndex
         moveNode(index,nextIndex,combinNum){
@@ -230,12 +230,13 @@ export default {
             clone.style.left === nextPos.left + '%' ? clone.classList.add('y' + nextPos.top)
                                                       : clone.classList.add('x' + nextPos.left);
             pEle.insertAdjacentElement('beforeEnd',clone);
-            setTimeout(_=>{
+            // 移动动画结束
+            clone.addEventListener("animationend", _=>{
                 clone.remove();
                 nextEle && nextEle.remove();
                 box.remove();
                 curEle.style.opacity = 1;
-            },200);
+            });
         },
         save(){
            localStorage['save1'] = JSON.stringify(this.nums); 

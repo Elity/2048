@@ -9,7 +9,10 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
-      app:["./app/main.js",'webpack-hot-middleware/client','webpack/hot/dev-server']
+      app:["./app/main.js",
+      'webpack-hot-middleware/client',
+      'webpack-dev-server/client?http://localhost:8080',
+      'webpack/hot/dev-server']
   },
   output: {
     path: __dirname + "/public",//打包后的文件存放的地方
